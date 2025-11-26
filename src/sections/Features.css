@@ -1,0 +1,31 @@
+.features {
+    padding: 80px 0 120px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.feature-card {
+    height: 100%;
+}
+
+.feature-title {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 16px;
+}
+
+.feature-desc {
+    color: var(--color-lunar);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}

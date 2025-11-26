@@ -1,0 +1,70 @@
+.btn {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    padding: 14px 36px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: transform 0.18s var(--ease-primary), filter 0.18s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: var(--color-ember);
+    color: white;
+    box-shadow: 0 8px 20px rgba(196, 44, 62, 0.12);
+}
+
+.btn-primary:hover {
+    transform: scale(1.02);
+    filter: brightness(1.05);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-pale);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+}
+
+.ripple {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    display: block;
+    content: "";
+    border-radius: 50%;
+    opacity: 1;
+    animation: 0.5s ease 1 forwards ripple-effect;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+@keyframes ripple-effect {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(20);
+        opacity: 0;
+    }
+}
+
+.btn-content {
+    position: relative;
+    z-index: 1;
+}

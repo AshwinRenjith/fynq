@@ -1,0 +1,31 @@
+.faq {
+    padding: 80px 0 120px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 48px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.faq-question {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.faq-answer {
+    color: var(--color-lunar);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .faq-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}

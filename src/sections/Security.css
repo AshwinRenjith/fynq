@@ -1,0 +1,42 @@
+.security {
+    padding: 120px 0;
+}
+
+.security-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.security-list {
+    list-style: none;
+    text-align: left;
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.security-item {
+    position: relative;
+    padding-left: 32px;
+    color: var(--color-lunar);
+    font-size: 16px;
+}
+
+.security-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    background: var(--color-ember);
+    border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    .security-list {
+        grid-template-columns: 1fr;
+    }
+}
