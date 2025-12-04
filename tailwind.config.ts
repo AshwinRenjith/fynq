@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Playfair Display', 'serif'],
-        heading: ['Syne', 'sans-serif'],
-        body: ['DM Sans', 'sans-serif'],
+        display: ['Cinzel', 'serif'],
+        heading: ['Playwrite NO', 'cursive'],
+        body: ['Science Gothic', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
