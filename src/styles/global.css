@@ -24,7 +24,7 @@ h3,
 h4,
 h5,
 h6 {
-    color: var(--color-pale);
+    color: var(--color-lunar);
     font-weight: 600;
     letter-spacing: -0.02em;
 }
@@ -49,7 +49,7 @@ button {
 }
 
 .glass-panel {
-    background: rgba(215, 216, 218, var(--glass-alpha));
+    background: rgba(219, 215, 210, var(--glass-alpha));
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
@@ -58,6 +58,7 @@ button {
 
 .text-gradient {
     background: linear-gradient(135deg, #fff 0%, var(--color-lunar) 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

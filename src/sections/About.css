@@ -10,7 +10,7 @@
 
 .about-copy {
     font-size: 24px;
-    color: #fff;
+    color: var(--color-lunar);
     line-height: 1.4;
     margin-bottom: 40px;
 }

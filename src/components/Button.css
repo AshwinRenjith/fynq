@@ -18,7 +18,7 @@
 .btn-primary {
     background: var(--color-ember);
     color: white;
-    box-shadow: 0 8px 20px rgba(196, 44, 62, 0.12);
+    box-shadow: 0 8px 20px rgba(18, 53, 36, 0.18);
 }
 
 .btn-primary:hover {
@@ -27,14 +27,14 @@
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-pale);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(219, 215, 210, 0.15);
+    color: var(--color-lunar);
+    border: 1px solid rgba(18, 53, 36, 0.15);
     backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(219, 215, 210, 0.25);
     transform: scale(1.02);
 }
 

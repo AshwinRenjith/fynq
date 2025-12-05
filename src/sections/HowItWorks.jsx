@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../components/Button';
+import BlurReveal from '../components/BlurReveal';
 import './HowItWorks.css';
 
 const HowItWorks = () => {

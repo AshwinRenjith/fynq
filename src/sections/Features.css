@@ -14,7 +14,7 @@
 
 .feature-title {
     font-size: 24px;
-    color: #fff;
+    color: var(--color-lunar);
     margin-bottom: 16px;
 }
 

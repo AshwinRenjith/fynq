@@ -1,6 +1,6 @@
 .solutions {
     padding: 120px 0;
-    background: linear-gradient(180deg, transparent 0%, rgba(196, 44, 62, 0.05) 50%, transparent 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(18, 53, 36, 0.05) 50%, transparent 100%);
 }
 
 .solutions-list {
@@ -22,7 +22,7 @@
 
 .solution-title {
     font-size: 20px;
-    color: #fff;
+    color: var(--color-lunar);
     margin-bottom: 8px;
 }
 

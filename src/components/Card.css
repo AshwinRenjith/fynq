@@ -1,6 +1,6 @@
 .glass-card {
     position: relative;
-    background: rgba(215, 216, 218, var(--glass-alpha));
+    background: rgba(219, 215, 210, var(--glass-alpha));
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border-radius: 22px;

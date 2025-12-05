@@ -22,7 +22,7 @@
 .footer-logo {
     font-size: 24px;
     font-weight: 700;
-    color: #fff;
+    color: var(--color-lunar);
     margin-bottom: 8px;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .footer-contact a {
-    color: #fff;
+    color: var(--color-lunar);
     transition: color 0.2s;
 }
 
@@ -52,7 +52,7 @@
     justify-content: space-between;
     align-items: center;
     padding-top: 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(18, 53, 36, 0.1);
     font-size: 13px;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .footer-links a:hover {
-    color: #fff;
+    color: var(--color-ember);
 }
 
 @media (max-width: 768px) {

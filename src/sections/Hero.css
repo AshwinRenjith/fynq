@@ -41,7 +41,7 @@
 .blob-2 {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, #4a4e55 0%, transparent 70%);
+    background: radial-gradient(circle, var(--color-ash) 0%, transparent 70%);
     bottom: -10%;
     left: -10%;
     transform: translate(calc(var(--mouse-x) * -1), calc(var(--mouse-y) * -1));
@@ -81,7 +81,7 @@
 
 .hero-support {
     font-size: 16px;
-    color: rgba(167, 169, 172, 0.8);
+    color: rgba(18, 53, 36, 0.8);
     margin-bottom: 40px;
 }
 
@@ -94,7 +94,7 @@
 
 .hero-trust {
     font-size: 14px;
-    color: rgba(167, 169, 172, 0.6);
+    color: rgba(18, 53, 36, 0.6);
     letter-spacing: 0.02em;
 }
 

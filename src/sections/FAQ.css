@@ -13,7 +13,7 @@
 
 .faq-question {
     font-size: 18px;
-    color: #fff;
+    color: var(--color-lunar);
     margin-bottom: 12px;
 }
 
