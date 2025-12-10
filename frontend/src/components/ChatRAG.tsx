@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { query as ragQuery } from "../lib/rag";
 
-const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generate";
+const GEMINI_PROXY = "/api/gemini";
 
 type Message = { id: number; role: "user" | "assistant" | "system"; text: string };
 
@@ -18,55 +18,71 @@ export const ChatRAG: React.FC = () => {
   async function handleSend() {
     const text = input.trim();
     if (!text) return;
+    
+    console.log("[ChatRAG] Sending message:", text);
+    
     const userMsg: Message = { id: Date.now(), role: "user", text };
     setMessages((m) => [...m, userMsg]);
     setInput("");
 
     setLoading(true);
-    // retrieve top passages
-    const hits = await ragQuery(text, 4);
+    try {
+      // retrieve top passages (surface a friendly error if the knowledge file is missing)
+      console.log("[ChatRAG] Fetching RAG context...");
+      const hits = await ragQuery(text, 4);
+      console.log("[ChatRAG] Retrieved hits:", hits.length);
 
-    // build a system prompt that instructs the model to use only provided context
-    const contextText = hits.map((h, i) => `Context ${i + 1}: ${h.text}`).join("\n\n");
+      const contextText = hits.length
+        ? hits.map((h, i) => `Context ${i + 1}: ${h.text}`).join("\n\n")
+        : "No context retrieved.";
 
-    const prompt = `You are a helpful assistant. Use ONLY the following context to answer the user's question. If the answer is not contained in the context, say you don't know.\n\n${contextText}\n\nUser question: ${text}`;
+      const prompt = `You are a helpful assistant. Use ONLY the following context to answer the user's question. If the answer is not contained in the context, say you don't know.\n\n${contextText}\n\nUser question: ${text}`;
 
-    // call Gemini (client-side). Warning: exposing API key in client is insecure.
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    let answer = "";
-    if (!apiKey) {
-      answer = `No API key provided. Here are the retrieved passages:\n\n${contextText}`;
-    } else {
-      try {
-        const body = {
-          prompt: { text: prompt },
-          // model-specific params
-          temperature: 0.2,
-          maxOutputTokens: 512,
-        };
+      console.log("[ChatRAG] Calling /api/gemini...");
+      let answer = "";
+      const body = {
+        prompt,
+        temperature: 0.2,
+        maxOutputTokens: 512,
+      };
 
-        const res = await fetch(`${GEMINI_ENDPOINT}?key=${apiKey}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
+      const res = await fetch(GEMINI_PROXY, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-        if (!res.ok) {
-          const textErr = await res.text();
-          answer = `LLM error: ${res.status} ${textErr}`;
-        } else {
-          const data = await res.json();
-          // For different API versions the field naming varies. We try to extract text safely.
-          answer = data?.candidates?.[0]?.content?.[0]?.text || data?.output?.[0]?.content?.text || JSON.stringify(data);
-        }
-      } catch (err: any) {
-        answer = `Request failed: ${err.message || err}`;
+      console.log("[ChatRAG] Response status:", res.status);
+
+      if (!res.ok) {
+        const textErr = await res.text();
+        console.error("[ChatRAG] Error response:", textErr);
+        answer = `LLM error: ${res.status} ${textErr}`;
+      } else {
+        const data = await res.json();
+        console.log("[ChatRAG] Response data:", data);
+        const candidate = data?.candidates?.[0];
+        answer =
+          candidate?.content?.[0]?.text ||
+          candidate?.output ||
+          data?.output ||
+          (typeof data === "string" ? data : JSON.stringify(data));
       }
-    }
 
-    const assistantMsg: Message = { id: Date.now() + 1, role: "assistant", text: answer };
-    setMessages((m) => [...m, assistantMsg]);
-    setLoading(false);
+      console.log("[ChatRAG] Final answer:", answer.substring(0, 100));
+      const assistantMsg: Message = { id: Date.now() + 1, role: "assistant", text: answer };
+      setMessages((m) => [...m, assistantMsg]);
+    } catch (err: any) {
+      console.error("[ChatRAG] Exception:", err);
+      const assistantMsg: Message = {
+        id: Date.now() + 1,
+        role: "assistant",
+        text: `Request failed: ${err?.message || err}`,
+      };
+      setMessages((m) => [...m, assistantMsg]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -89,7 +105,7 @@ export const ChatRAG: React.FC = () => {
             if (e.key === "Enter") handleSend();
           }}
         />
-        <button onClick={handleSend} disabled={loading} className="bg-foreground text-background px-4 py-2 rounded-full">
+        <button type="button" onClick={handleSend} disabled={loading} className="bg-foreground text-background px-4 py-2 rounded-full">
           {loading ? "..." : "Send"}
         </button>
       </div>

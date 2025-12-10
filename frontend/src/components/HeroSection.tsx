@@ -28,6 +28,36 @@ export const HeroSection = () => {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+    
+    // Scroll to the chat section
+    const chatSection = document.getElementById("chat");
+    if (chatSection) {
+      chatSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      
+      // Pass the message to ChatRAG via URL hash or event
+      setTimeout(() => {
+        const chatInput = chatSection.querySelector("input");
+        if (chatInput instanceof HTMLInputElement) {
+          chatInput.value = message;
+          chatInput.focus();
+          // Trigger input event so React picks it up
+          chatInput.dispatchEvent(new Event("input", { bubbles: true }));
+          
+          // Trigger the send button click
+          const sendButton = chatSection.querySelector("button[type='button']:not([disabled])");
+          if (sendButton instanceof HTMLButtonElement) {
+            setTimeout(() => sendButton.click(), 100);
+          }
+        }
+      }, 600);
+      
+      setMessage("");
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden animated-gradient noise">
       {/* Gradient Mesh Background */}
@@ -91,7 +121,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
             ref={formRef}
             className="max-w-4xl mx-auto"
           >
