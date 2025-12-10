@@ -1,8 +1,33 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Sparkles, Plus, Mic, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { FloatingChat } from "./FloatingChat";
 
 export const HeroSection = () => {
+  const [message, setMessage] = useState("");
+  const [showMiniChat, setShowMiniChat] = useState(false);
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const threshold = 500;
+      setShowMiniChat(window.scrollY > threshold);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const focusChat = () => {
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      const inputEl = formRef.current.querySelector("input");
+      if (inputEl instanceof HTMLInputElement) {
+        setTimeout(() => inputEl.focus(), 400);
+      }
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden animated-gradient noise">
       {/* Gradient Mesh Background */}
@@ -61,21 +86,50 @@ export const HeroSection = () => {
             continuously intelligent—amplifying performance at every layer.
           </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div
+          {/* Chat CTA */}
+          <motion.form
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            onSubmit={(e) => e.preventDefault()}
+            ref={formRef}
+            className="max-w-4xl mx-auto"
           >
-            <Button variant="hero" size="xl" className="group">
-              <span>Get Started</span>
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button variant="premium-outline" size="xl">
-              Explore Services
-            </Button>
-          </motion.div>
+            <div className="relative rounded-full border border-border/40 bg-background/90 backdrop-blur-md shadow-[0_15px_45px_-25px_rgba(0,0,0,0.4)] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-foreground/[0.02] via-transparent to-foreground/[0.02] pointer-events-none" />
+
+              <div className="relative flex items-center gap-4 px-4 sm:px-6 lg:px-8 py-4">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border/50 bg-foreground/[0.02] text-foreground/60">
+                  <Plus className="w-5 h-5" />
+                </div>
+
+                <input
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Ask anything about our services"
+                  className="flex-1 bg-transparent border-0 focus:outline-none focus:ring-0 font-body text-base sm:text-lg text-foreground placeholder:text-muted-foreground/70"
+                />
+
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <button
+                    type="button"
+                    className="w-10 h-10 rounded-full border border-border/40 hover:border-foreground/30 hover:bg-foreground/[0.04] text-foreground/60 hover:text-foreground transition-colors duration-200"
+                  >
+                    <Mic className="w-5 h-5 mx-auto" />
+                  </button>
+                  <button
+                    type="submit"
+                    className="w-10 h-10 rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors duration-200 flex items-center justify-center"
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.form>
+
+          {/* Mini Chat Bubble on Scroll */}
+          <FloatingChat visible={showMiniChat} onClick={focusChat} />
 
           {/* Stats */}
           <motion.div

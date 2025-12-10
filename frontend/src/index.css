@@ -304,3 +304,18 @@
     animation: shimmer 3s infinite;
   }
 }
+
+/* Ensure floating chat/button does not overlap contact form inputs
+   Adds a safe bottom padding to the contact section so fixed-position
+   widgets (e.g. #ask-fynq-button) don't obscure form fields on scroll.
+   Uses env(safe-area-inset-bottom) for devices with home indicators/notches.
+*/
+.contact-section {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (max-width: 640px) {
+  .contact-section {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+  }
+}
