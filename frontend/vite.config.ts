@@ -148,9 +148,9 @@ export default defineConfig(({ mode }) => {
   // Load env vars from .env files (VITE_ prefixed and non-prefixed)
   const env = loadEnv(mode, process.cwd(), '');
   const apiKey = env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY;
-  
+
   console.log('[vite.config] GEMINI_API_KEY available:', !!apiKey);
-  
+
   return {
     server: {
       host: "::",
@@ -165,5 +165,13 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
+    build: {
+      rollupOptions: {
+        external: [
+          './api/gemini.ts',
+          './api/*',
+        ]
+      }
+    }
   };
 });
