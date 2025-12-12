@@ -4,11 +4,6 @@
   "installCommand": "cd frontend && npm install",
   "devCommand": "cd frontend && npm run dev",
   "framework": null,
-  "functions": {
-    "api/gemini.py": {
-      "runtime": "@vercel/python@1.1.0"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/:path*",
