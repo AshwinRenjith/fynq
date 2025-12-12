@@ -65,7 +65,7 @@ export const Navigation = () => {
             </motion.a>
           ))}
           <Button variant="premium" size="sm">
-            Get Started
+            Book a call
           </Button>
         </div>
 
@@ -104,7 +104,7 @@ export const Navigation = () => {
                 </motion.a>
               ))}
               <Button variant="premium" className="mt-4">
-                Get Started
+                Book a call
               </Button>
             </div>
           </motion.div>

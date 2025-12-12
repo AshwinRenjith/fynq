@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { query as ragQuery } from "../lib/rag";
 
-const GEMINI_PROXY = "/api/gemini";
+const GEMINI_PROXY = import.meta.env.VITE_GEMINI_PROXY || "/api/gemini";
 
 type Message = { id: number; role: "user" | "assistant" | "system"; text: string };
 
@@ -54,19 +54,40 @@ export const ChatRAG: React.FC = () => {
 
       console.log("[ChatRAG] Response status:", res.status);
 
+      // Always read text first to avoid JSON parse errors on empty/error bodies
+      const raw = await res.text();
+      let data: any = null;
+      try {
+        data = raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        console.warn("[ChatRAG] Non-JSON response body:", raw);
+      }
+
       if (!res.ok) {
-        const textErr = await res.text();
-        console.error("[ChatRAG] Error response:", textErr);
-        answer = `LLM error: ${res.status} ${textErr}`;
+        const errMsg = data?.error || raw || `HTTP ${res.status}`;
+        console.error("[ChatRAG] Error response:", errMsg);
+        answer = `LLM error: ${res.status} ${errMsg}`;
       } else {
-        const data = await res.json();
-        console.log("[ChatRAG] Response data:", data);
+        console.log("[ChatRAG] Response data:", data || raw);
+
         const candidate = data?.candidates?.[0];
-        answer =
-          candidate?.content?.[0]?.text ||
-          candidate?.output ||
-          data?.output ||
-          (typeof data === "string" ? data : JSON.stringify(data));
+        if (candidate?.output) {
+          answer = candidate.output;
+        } else if (candidate?.content) {
+          const content = candidate.content;
+          answer = Array.isArray(content) ? content[0]?.text || content[0] : content;
+        } else if (data?.output) {
+          answer = data.output;
+        } else if (data?.text) {
+          answer = data.text;
+        } else if (typeof raw === "string" && raw.trim()) {
+          answer = raw;
+        } else if (data) {
+          console.warn("[ChatRAG] Unexpected response format, using JSON:", data);
+          answer = JSON.stringify(data, null, 2);
+        } else {
+          answer = "No content returned from model.";
+        }
       }
 
       console.log("[ChatRAG] Final answer:", answer.substring(0, 100));
