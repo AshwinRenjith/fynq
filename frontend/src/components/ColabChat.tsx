@@ -220,7 +220,7 @@ export const ColabChat: React.FC<Props> = ({ open, onOpenChange, queuedMessage, 
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 40, scale: 0.95 }}
           transition={{ duration: 0.4, type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed bottom-6 left-[30%] -translate-x-1/2 z-[999999] w-[700px] max-w-[calc(100vw-2rem)]"
+          className="fixed bottom-6 left-[25%] -translate-x-1/2 z-[999999] w-[700px] max-w-[calc(100vw-2rem)]"
           role="dialog"
           aria-label="Chat with Fynq"
         >
