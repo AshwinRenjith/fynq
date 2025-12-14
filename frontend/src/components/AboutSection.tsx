@@ -4,26 +4,11 @@ import { useRef } from "react";
 import { Sparkles, Copy, Wrench, Shield, TrendingUp } from "lucide-react";
 
 const features = [
-  {
-    icon: Sparkles,
-    description: "Refined AI automation that brings clarity and speed to your operations",
-  },
-  {
-    icon: Copy,
-    description: "High-fidelity digital twins designed for accuracy, insight, and scale",
-  },
-  {
-    icon: Wrench,
-    description: "Tailored solutions crafted around your workflows, not the other way around",
-  },
-  {
-    icon: Shield,
-    description: "Enterprise-grade reliability with seamless integration and trusted performance",
-  },
-  {
-    icon: TrendingUp,
-    description: "A future-ready approach that keeps your systems continuously intelligent",
-  },
+  { icon: Sparkles, description: "Agentic AI automation" },
+  { icon: Copy, description: "High-fidelity RAG engines" },
+  { icon: Wrench, description: "Tailored workflow systems" },
+  { icon: Shield, description: "Enterprise reliability" },
+  { icon: TrendingUp, description: "Intelligence that evolves with your firm" },
 ];
 
 export const AboutSection = () => {
@@ -36,7 +21,7 @@ export const AboutSection = () => {
       <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-radial from-gold/5 to-transparent" />
       <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-radial from-teal/5 to-transparent" />
 
-      <div className="container-premium relative z-10">
+      <div className="container-premium relative z-10 px-6 md:px-8 py-16 md:py-20">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
           <div>
@@ -57,7 +42,7 @@ export const AboutSection = () => {
             >
               <span className="text-foreground">Redefining How</span>
               <br />
-              <span className="text-gradient-gold-teal">Businesses Operate</span>
+              <span className="text-gradient-gold-teal">Firms Operate</span>
             </motion.h2>
 
             <motion.p
@@ -66,10 +51,8 @@ export const AboutSection = () => {
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               className="font-body text-lg text-muted-foreground leading-relaxed mb-6"
             >
-              Fynq Solutions is a modern AI technology company focused on redefining 
-              how businesses operate. We merge advanced automation, digital twin 
-              intelligence, and refined engineering to build systems that feel 
-              effortless yet exceptionally powerful.
+              Fynq builds specialized AI systems for accounting and legal teams—designed
+              to remove repetitive work, accelerate delivery, and increase accuracy.
             </motion.p>
 
             <motion.p
@@ -78,9 +61,19 @@ export const AboutSection = () => {
               transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
               className="font-body text-lg text-muted-foreground leading-relaxed mb-8"
             >
-              Our platforms bring clarity, speed, and precision to everyday 
-              workflows—helping teams make smarter decisions, accelerate delivery, 
-              and stay ahead in an evolving world.
+              What We Deliver
+
+              Agentic AI automation
+
+              High-fidelity RAG engines
+
+              Tailored workflow systems
+
+              Enterprise reliability
+
+              Intelligence that evolves with your firm
+
+              AI that works the way professionals think.
             </motion.p>
           </div>
 

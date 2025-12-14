@@ -7,7 +7,8 @@ import json
 import os
 import sys
 import inspect
-from typing import Any, Dict
+from typing import Any, Dict, Iterator
+import time
 
 try:  # Available only inside Vercel Python runtime
     from vercel import VercelRequest, VercelResponse  # type: ignore
@@ -20,6 +21,14 @@ BASE_HEADERS = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Content-Type",
 }
+
+
+def _text_response(text: str, status: int = 200):
+    if VercelResponse is None:  # pragma: no cover - CLI mode
+        return {"text": text}
+    headers = BASE_HEADERS.copy()
+    headers["Content-Type"] = "text/plain; charset=utf-8"
+    return VercelResponse(text, status=status, headers=headers)
 
 
 def _prime_google_env() -> None:
@@ -100,6 +109,54 @@ def _run_generation(prompt: str, max_output_tokens: int) -> Dict[str, Any]:
     return {"text": text.strip(), "model": GEMINI_MODEL, "raw": raw}
 
 
+def _stream_generation(prompt: str, max_output_tokens: int, chunk_size: int = 128) -> Iterator[str]:
+    """Yield pieces of the model output as plain text chunks.
+
+    We try to use the SDK's streaming primitives if available; otherwise
+    we fall back to generating the full text and slicing it into chunks.
+    """
+    client = None
+    try:
+        client = genai.Client(api_key=_ensure_api_key())
+    except Exception:
+        client = None
+
+    # Try SDK streaming (best-effort - not all genai versions expose this API)
+    try:
+        # Some SDKs provide `responses.stream` or similar. We attempt both
+        # common names but don't fail if none are available.
+        if client is not None and hasattr(client, "responses") and hasattr(client.responses, "stream"):
+            for event in client.responses.stream(model=GEMINI_MODEL, input=prompt, max_output_tokens=max_output_tokens):
+                # `event` may be a string or an object with `text` attribute
+                if isinstance(event, str):
+                    yield event
+                else:
+                    txt = getattr(event, "text", None) or (getattr(event, "output", None) or "")
+                    if isinstance(txt, list):
+                        for t in txt:
+                            yield t
+                    else:
+                        yield str(txt)
+            return
+    except Exception:
+        # Fall through to fallback below
+        pass
+
+    # Fallback: generate full text then stream in chunks
+    result = _run_generation(prompt, max_output_tokens)
+    text = result.get("text", "") or ""
+    if not text:
+        # still yield something so client doesn't hang
+        yield ""
+        return
+
+    # Yield slices
+    for i in range(0, len(text), chunk_size):
+        yield text[i : i + chunk_size]
+        # small sleep to allow the consumer to render progressively
+        time.sleep(0.01)
+
+
 def _resolve_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     prompt = payload.get("prompt")
     if not prompt or not isinstance(prompt, str):
@@ -142,7 +199,37 @@ def handler(request: "VercelRequest") -> "VercelResponse":  # type: ignore[valid
             payload = {}
 
     try:
+        # If the client requested streaming, return a chunked/plain-text stream
+        if payload.get("stream"):
+            max_tokens = int(payload.get("maxOutputTokens", 512))
+            prompt = payload.get("prompt", "")
+            if not prompt:
+                return _json_response({"error": "Missing prompt"}, status=400)
+
+            # create a generator that yields small text chunks
+            def stream_iter():
+                for chunk in _stream_generation(prompt, max_tokens):
+                    try:
+                        yield chunk
+                    except GeneratorExit:
+                        break
+
+            if VercelResponse is None:  # pragma: no cover - CLI mode
+                # In CLI/local mode, just return the full text result
+                result = _resolve_payload(payload)
+                return result
+
+            headers = BASE_HEADERS.copy()
+            headers["Content-Type"] = "text/plain; charset=utf-8"
+            return VercelResponse(stream_iter(), status=200, headers=headers)
+
         result = _resolve_payload(payload)
+
+        # Optional plain-text output (e.g. UI wants text, not JSON)
+        if payload.get("responseFormat") == "text":
+            return _text_response(str(result.get("text", "") or ""))
+
+        # Default JSON response
         return _json_response(result)
     except ValueError as exc:
         return _json_response({"error": str(exc)}, status=400)

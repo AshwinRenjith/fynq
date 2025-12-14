@@ -43,7 +43,7 @@ export const Navigation = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <span className="font-display text-2xl md:text-3xl font-bold text-gradient-gold-teal">
+          <span className="font-display text-2xl md:text-3xl font-bold text-gradient-premium">
             Fynq
           </span>
           <span className="font-heading text-lg text-muted-foreground hidden sm:block">

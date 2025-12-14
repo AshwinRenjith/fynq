@@ -5,6 +5,51 @@ const GEMINI_PROXY = import.meta.env.VITE_GEMINI_PROXY || "/api/gemini";
 
 type Message = { id: number; role: "user" | "assistant" | "system"; text: string };
 
+function stripMarkdownToText(input: string): string {
+  let text = input || "";
+  text = text.replace(/```[\s\S]*?```/g, (m) => m.replace(/^```\w*\n?/, "").replace(/```$/, ""));
+  text = text.replace(/`([^`]+)`/g, "$1");
+  text = text.replace(/!\[([^\]]*)\]\([^\)]*\)/g, "$1");
+  text = text.replace(/\[([^\]]+)\]\([^\)]*\)/g, "$1");
+  text = text.replace(/^\s{0,3}#{1,6}\s+/gm, "");
+  text = text.replace(/^\s?>\s?/gm, "");
+  text = text.replace(/\*\*([^*]+)\*\*/g, "$1");
+  text = text.replace(/__([^_]+)__/g, "$1");
+  text = text.replace(/\*([^*]+)\*/g, "$1");
+  text = text.replace(/_([^_]+)_/g, "$1");
+  text = text.replace(/~~([^~]+)~~/g, "$1");
+  text = text.replace(/^\s*[-*+]\s+/gm, "");
+  text = text.replace(/^\s*\d+\.\s+/gm, "");
+  text = text.replace(/\n{3,}/g, "\n\n");
+  return text.trim();
+}
+
+function extractModelText(raw: string): string {
+  const s = (raw || "").trim();
+  if (!s) return "";
+  if (!(s.startsWith("{") || s.startsWith("["))) return raw;
+  try {
+    const data: any = JSON.parse(s);
+    if (typeof data?.text === "string") return data.text;
+    if (typeof data?.output === "string") return data.output;
+    const cand = data?.candidates?.[0];
+    if (typeof cand?.output === "string") return cand.output;
+    if (typeof cand?.text === "string") return cand.text;
+    if (cand?.content) {
+      const content = cand.content;
+      if (typeof content === "string") return content;
+      if (Array.isArray(content)) {
+        const first = content[0];
+        if (typeof first === "string") return first;
+        if (typeof first?.text === "string") return first.text;
+      }
+    }
+  } catch {
+    // ignore
+  }
+  return raw;
+}
+
 export const ChatRAG: React.FC = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
@@ -18,9 +63,9 @@ export const ChatRAG: React.FC = () => {
   async function handleSend() {
     const text = input.trim();
     if (!text) return;
-    
+
     console.log("[ChatRAG] Sending message:", text);
-    
+
     const userMsg: Message = { id: Date.now(), role: "user", text };
     setMessages((m) => [...m, userMsg]);
     setInput("");
@@ -38,12 +83,14 @@ export const ChatRAG: React.FC = () => {
 
       const prompt = `You are a helpful assistant. Use ONLY the following context to answer the user's question. If the answer is not contained in the context, say you don't know.\n\n${contextText}\n\nUser question: ${text}`;
 
-      console.log("[ChatRAG] Calling /api/gemini...");
-      let answer = "";
+      console.log("[ChatRAG] Calling /api/gemini (stream)...");
+
       const body = {
         prompt,
         temperature: 0.2,
         maxOutputTokens: 512,
+        stream: true,
+        responseFormat: "text",
       };
 
       const res = await fetch(GEMINI_PROXY, {
@@ -54,45 +101,50 @@ export const ChatRAG: React.FC = () => {
 
       console.log("[ChatRAG] Response status:", res.status);
 
-      // Always read text first to avoid JSON parse errors on empty/error bodies
-      const raw = await res.text();
-      let data: any = null;
-      try {
-        data = raw ? JSON.parse(raw) : null;
-      } catch (e) {
-        console.warn("[ChatRAG] Non-JSON response body:", raw);
-      }
-
       if (!res.ok) {
-        const errMsg = data?.error || raw || `HTTP ${res.status}`;
+        const rawErr = await res.text();
+        const errMsg = rawErr || `HTTP ${res.status}`;
         console.error("[ChatRAG] Error response:", errMsg);
-        answer = `LLM error: ${res.status} ${errMsg}`;
-      } else {
-        console.log("[ChatRAG] Response data:", data || raw);
-
-        const candidate = data?.candidates?.[0];
-        if (candidate?.output) {
-          answer = candidate.output;
-        } else if (candidate?.content) {
-          const content = candidate.content;
-          answer = Array.isArray(content) ? content[0]?.text || content[0] : content;
-        } else if (data?.output) {
-          answer = data.output;
-        } else if (data?.text) {
-          answer = data.text;
-        } else if (typeof raw === "string" && raw.trim()) {
-          answer = raw;
-        } else if (data) {
-          console.warn("[ChatRAG] Unexpected response format, using JSON:", data);
-          answer = JSON.stringify(data, null, 2);
-        } else {
-          answer = "No content returned from model.";
+        const assistantMsg: Message = { id: Date.now() + 1, role: "assistant", text: `LLM error: ${res.status} ${errMsg}` };
+        setMessages((m) => [...m, assistantMsg]);
+      } else if (!res.body) {
+        // No streaming body available — fall back to full response
+        const raw = await res.text();
+        let data: any = null;
+        try {
+          data = raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          console.warn("[ChatRAG] Non-JSON response body:", raw);
         }
-      }
+        const text = stripMarkdownToText(extractModelText(data?.text || data?.output || raw || "No content returned from model."));
+        const assistantMsg: Message = { id: Date.now() + 1, role: "assistant", text };
+        setMessages((m) => [...m, assistantMsg]);
+      } else {
+        // Streaming response: read chunks and append progressively
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        const assistantId = Date.now() + 1;
+        // push empty assistant message which we'll update
+        setMessages((m) => [...m, { id: assistantId, role: "assistant", text: "" }]);
 
-      console.log("[ChatRAG] Final answer:", answer.substring(0, 100));
-      const assistantMsg: Message = { id: Date.now() + 1, role: "assistant", text: answer };
-      setMessages((m) => [...m, assistantMsg]);
+        let done = false;
+        while (!done) {
+          const { value, done: streamDone } = await reader.read();
+          done = !!streamDone;
+          if (value) {
+            const chunk = decoder.decode(value, { stream: true });
+            // append chunk to the assistant message
+            setMessages((prev) => prev.map((msg) => (msg.id === assistantId ? { ...msg, text: msg.text + chunk } : msg)));
+          }
+        }
+
+        // Strip markdown artifacts once the stream completes
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === assistantId ? { ...msg, text: stripMarkdownToText(extractModelText(msg.text)) } : msg
+          )
+        );
+      }
     } catch (err: any) {
       console.error("[ChatRAG] Exception:", err);
       const assistantMsg: Message = {
@@ -121,7 +173,7 @@ export const ChatRAG: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-1 rounded-full border border-border px-4 py-3 focus:outline-none"
-          placeholder="Ask something about our products or services"
+          placeholder="Ask about our AI solutions…"
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSend();
           }}

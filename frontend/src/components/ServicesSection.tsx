@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { 
-  FileText, 
-  MessageSquare, 
-  Ticket, 
-  Users, 
-  Phone, 
+import {
+  FileText,
+  MessageSquare,
+  Ticket,
+  Users,
+  Phone,
   Lightbulb,
   Monitor,
   Globe,
@@ -16,60 +16,18 @@ import {
 import { cn } from "@/lib/utils";
 
 const aiServices = [
-  {
-    icon: FileText,
-    title: "Document Processing",
-    description: "We turn your document chaos into instant, clean intelligence—without you lifting a finger.",
-  },
-  {
-    icon: MessageSquare,
-    title: "RAG-Based Chatbot",
-    description: "Your firm's brain, digitized—an AI that answers with the precision of your top expert.",
-  },
-  {
-    icon: Ticket,
-    title: "AI Ticketing System",
-    description: "Tickets resolve themselves—our AI detects, routes, and responds before you even log in.",
-  },
-  {
-    icon: Users,
-    title: "Customer Hiring Agents",
-    description: "Your smartest recruiter—scanning thousands, shortlisting only the ones worth your time.",
-  },
-  {
-    icon: Phone,
-    title: "WhatsApp Automation",
-    description: "WhatsApp becomes your elite operations team—following up, collecting, and closing loops automatically.",
-  },
-  {
-    icon: Lightbulb,
-    title: "AI Consultancy & Strategy",
-    description: "Clarity, direction, and strategy—AI that moves your business forward with purpose, not guesswork.",
-  },
+  { icon: FileText, title: "Document Intelligence", description: "Extract, summarize, structure." },
+  { icon: MessageSquare, title: "RAG Knowledge Assistants", description: "Accurate, firm-trained answers." },
+  { icon: Phone, title: "WhatsApp Automation", description: "Follow-ups, reminders, onboarding." },
+  { icon: Users, title: "Hiring Agents", description: "Smart CV screening & shortlisting." },
+  { icon: Ticket, title: "AI Ticketing", description: "Automated routing & resolution." },
+  { icon: Lightbulb, title: "AI Strategy", description: "Practical roadmaps for adoption." },
 ];
 
 const otherServices = [
-  {
-    icon: Monitor,
-    title: "Software Solutions",
-    subtitle: "CRM, ERP, POS",
-    description: "Systems that think with you—built to streamline today and scale effortlessly tomorrow.",
-  },
-  {
-    icon: Globe,
-    title: "Websites",
-    description: "A website that looks elite and performs even sharper—your brand, elevated to its highest version.",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile Apps",
-    description: "Apps that feel natural, respond instantly, and deliver a premium experience every time.",
-  },
-  {
-    icon: Cloud,
-    title: "Cloud Migration",
-    description: "Your business—reborn in the cloud with zero stress, zero downtime, and full future-readiness.",
-  },
+  { icon: Monitor, title: "Integrations & deployment", subtitle: "", description: "Seamless integrations and production deployment." },
+  { icon: Globe, title: "Custom automation engineering", subtitle: "", description: "Bespoke automation built for your firm." },
+  { icon: Cloud, title: "Secure AI infrastructure", subtitle: "", description: "Enterprise-grade security and reliability." },
 ];
 
 type TabType = "ai" | "other";
@@ -88,7 +46,7 @@ export const ServicesSection = () => {
       <div className="absolute top-1/3 right-0 w-1/4 h-1/4 bg-gradient-radial from-foreground/[0.015] to-transparent" />
       <div className="absolute bottom-1/3 left-0 w-1/4 h-1/4 bg-gradient-radial from-foreground/[0.015] to-transparent" />
 
-      <div className="container-premium relative z-10">
+      <div className="container-premium relative z-10 px-6 md:px-8 py-16 md:py-20">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.span
@@ -108,7 +66,7 @@ export const ServicesSection = () => {
           >
             <span className="text-foreground">Solutions That</span>
             <br />
-            <span className="text-gradient-gold-teal">Transform</span>
+            <span className="text-gradient-gold-teal">Transform Workflows</span>
           </motion.h2>
         </div>
 
@@ -169,8 +127,8 @@ export const ServicesSection = () => {
         >
           <div className={cn(
             "grid gap-px bg-border/20 rounded-2xl overflow-hidden",
-            activeTab === "ai" 
-              ? "md:grid-cols-2 lg:grid-cols-3" 
+            activeTab === "ai"
+              ? "md:grid-cols-2 lg:grid-cols-3"
               : "md:grid-cols-2"
           )}>
             {currentServices.map((service, index) => (
@@ -183,7 +141,7 @@ export const ServicesSection = () => {
               >
                 {/* Hover Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-foreground/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 <div className="relative z-10 h-full flex flex-col">
                   {/* Icon with Subtle Border */}
                   <div className="mb-6 inline-flex">
@@ -212,10 +170,10 @@ export const ServicesSection = () => {
                   {/* Minimal Arrow Indicator */}
                   <div className="mt-6 flex items-center gap-2 text-muted-foreground/40 group-hover:text-foreground/60 transition-all duration-300">
                     <div className="h-px flex-1 bg-current transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                    <svg 
-                      className="w-4 h-4 transform translate-x-[-8px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" 
-                      fill="none" 
-                      stroke="currentColor" 
+                    <svg
+                      className="w-4 h-4 transform translate-x-[-8px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"
+                      fill="none"
+                      stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

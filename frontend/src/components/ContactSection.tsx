@@ -68,7 +68,7 @@ export const ContactSection = () => {
       <div className="absolute inset-0 bg-mesh opacity-40" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      <div className="container-premium relative z-10">
+      <div className="container-premium relative z-10 px-6 md:px-8 py-16 md:py-20">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left Content */}
           <div>
@@ -76,7 +76,7 @@ export const ContactSection = () => {
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
               animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="inline-block font-heading text-sm uppercase tracking-widest text-gold mb-4"
+              className="inline-block font-heading text-sm uppercase tracking-widest text-muted-foreground mb-4"
             >
               Contact Us
             </motion.span>
@@ -89,7 +89,7 @@ export const ContactSection = () => {
             >
               <span className="text-foreground">Let's Build</span>
               <br />
-              <span className="text-gradient-gold-teal">Something Great</span>
+              <span className="text-gradient-premium">Something Great</span>
             </motion.h2>
 
             <motion.p
@@ -98,8 +98,7 @@ export const ContactSection = () => {
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               className="font-body text-lg text-muted-foreground leading-relaxed mb-10"
             >
-              Ready to transform your business with AI? We're here to help you
-              navigate the future of intelligent automation.
+              Ready to modernize your firm with AI? We’d love to understand your workflows and challenges.
             </motion.p>
 
             {/* Contact Info */}
@@ -110,16 +109,16 @@ export const ContactSection = () => {
               className="space-y-6"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center">
-                  <Mail className="w-5 h-5 text-gold" />
+                <div className="w-12 h-12 rounded-xl bg-foreground/5 flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-foreground" />
                 </div>
                 <div>
                   <p className="font-heading text-sm text-muted-foreground mb-1">Email</p>
                   <div className="flex flex-col gap-1">
-                    <a href="mailto:ashwin.fynq@gmail.com" className="font-body text-foreground hover:text-gold transition-colors">
+                    <a href="mailto:ashwin.fynq@gmail.com" className="font-body text-foreground hover:text-foreground/70 transition-colors">
                       ashwin.fynq@gmail.com
                     </a>
-                    <a href="mailto:ayushbenny.fynq@gmail.com" className="font-body text-foreground hover:text-gold transition-colors">
+                    <a href="mailto:ayushbenny.fynq@gmail.com" className="font-body text-foreground hover:text-foreground/70 transition-colors">
                       ayushbenny.fynq@gmail.com
                     </a>
                   </div>
@@ -127,8 +126,8 @@ export const ContactSection = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-teal/10 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-teal" />
+                <div className="w-12 h-12 rounded-xl bg-foreground/5 flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-foreground" />
                 </div>
                 <div>
                   <p className="font-heading text-sm text-muted-foreground mb-1">Location</p>
@@ -158,7 +157,7 @@ export const ContactSection = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-muted/30 border border-border/50 text-foreground font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20 transition-all duration-300"
+                    className="w-full px-4 py-3 rounded-xl bg-muted/30 border border-border/50 text-foreground font-body placeholder:text-muted-foreground/50 focus:outline-none focus:border-foreground/50 focus:ring-1 focus:ring-foreground/20 transition-all duration-300"
                     placeholder="Your name"
                   />
                 </div>
@@ -218,7 +217,7 @@ export const ContactSection = () => {
                   </>
                 ) : (
                   <>
-                    <span>Send Message</span>
+                    <span>Send Message →</span>
                     <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </>
                 )}

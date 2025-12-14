@@ -4,31 +4,11 @@ import { useRef } from "react";
 import { Target, Gauge, Settings, Shield, RefreshCw } from "lucide-react";
 
 const reasons = [
-  {
-    icon: Target,
-    title: "Refined AI Automation",
-    description: "Brings clarity, speed, and accuracy to your operations",
-  },
-  {
-    icon: Gauge,
-    title: "High-Fidelity Digital Twins",
-    description: "Engineered for deep insight, precision, and scale",
-  },
-  {
-    icon: Settings,
-    title: "Tailor-Made Solutions",
-    description: "Designed around your workflows—not the other way around",
-  },
-  {
-    icon: Shield,
-    title: "Enterprise-Grade Reliability",
-    description: "Seamless integration and trusted performance",
-  },
-  {
-    icon: RefreshCw,
-    title: "Continuously Intelligent",
-    description: "Systems built to evolve with your business",
-  },
+  { icon: Target, title: "Agentic automation", description: "Executes end-to-end workflows with minimal oversight" },
+  { icon: Gauge, title: "Context-aware RAG", description: "Delivers precise, firm-trained answers" },
+  { icon: Settings, title: "Custom workflows", description: "Built around your practice and processes" },
+  { icon: Shield, title: "Secure, reliable deployment", description: "Enterprise-ready infrastructure and controls" },
+  { icon: RefreshCw, title: "Systems that improve", description: "Intelligence that learns and adapts over time" },
 ];
 
 export const WhyChooseSection = () => {
@@ -40,8 +20,8 @@ export const WhyChooseSection = () => {
       {/* Subtle Background Elements */}
       <div className="absolute top-1/2 left-0 w-1/3 h-1/3 bg-gradient-radial from-foreground/[0.02] to-transparent" />
       <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-gradient-radial from-foreground/[0.02] to-transparent" />
-      
-      <div className="container-premium relative z-10">
+
+      <div className="container-premium relative z-10 px-6 md:px-8 py-16 md:py-20">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.span
@@ -59,9 +39,9 @@ export const WhyChooseSection = () => {
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
             className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
           >
-            <span className="text-foreground">Because Intelligence</span>
+            <span className="text-foreground">Effortless Intelligence</span>
             <br />
-            <span className="text-gradient-gold-rose">Should Feel Effortless</span>
+            <span className="text-gradient-gold-rose">for Professionals</span>
           </motion.h2>
 
           <motion.p
@@ -70,8 +50,17 @@ export const WhyChooseSection = () => {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="font-body text-lg text-muted-foreground leading-relaxed"
           >
-            We blend advanced AI with thoughtful design and precise engineering 
-            to build automation that elevates your business—without adding complexity.
+            Our Edge
+            
+            Agentic automation that executes end-to-end
+            
+            Context-aware RAG for precise answers
+            
+            Custom workflows built around your practice
+            
+            Secure, reliable deployment
+            
+            Systems that improve over time
           </motion.p>
         </div>
 
@@ -87,7 +76,7 @@ export const WhyChooseSection = () => {
             >
               {/* Hover Background */}
               <div className="absolute inset-0 bg-foreground/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
-              
+
               <div className="relative flex items-start gap-6 py-8 px-6 border-b border-border/30 last:border-b-0 transition-all duration-300 group-hover:px-8">
                 {/* Icon */}
                 <div className="flex-shrink-0 mt-1">
@@ -108,10 +97,10 @@ export const WhyChooseSection = () => {
 
                 {/* Subtle Arrow Indicator */}
                 <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-8px] group-hover:translate-x-0">
-                  <svg 
-                    className="w-5 h-5 text-muted-foreground" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <svg
+                    className="w-5 h-5 text-muted-foreground"
+                    fill="none"
+                    stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

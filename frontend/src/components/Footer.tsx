@@ -3,8 +3,8 @@ import { ArrowUpRight } from "lucide-react";
 
 const footerLinks = {
   services: [
-    { name: "AI Services", href: "#services" },
-    { name: "Tech Solutions", href: "#services" },
+    { name: "AI Systems", href: "#services" },
+    { name: "Automation", href: "#services" },
     { name: "Consulting", href: "#services" },
   ],
   products: [
@@ -23,15 +23,15 @@ export const Footer = () => {
     <footer className="relative overflow-hidden border-t border-border/50">
       {/* Background */}
       <div className="absolute inset-0 bg-card/30" />
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-gradient-radial from-gold/5 to-transparent" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-radial from-teal/5 to-transparent" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-gradient-radial from-foreground/5 to-transparent" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-radial from-foreground/5 to-transparent" />
 
       <div className="container-premium relative z-10 py-16 px-6 md:px-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           {/* Brand */}
           <div className="lg:col-span-2">
             <a href="#" className="inline-block mb-6">
-              <span className="font-display text-3xl font-bold text-gradient-gold-teal">
+              <span className="font-display text-3xl font-bold text-gradient-premium">
                 Fynq
               </span>
               <span className="font-heading text-lg text-muted-foreground ml-2">
@@ -39,17 +39,16 @@ export const Footer = () => {
               </span>
             </a>
             <p className="font-body text-muted-foreground leading-relaxed max-w-sm mb-6">
-              When vision meets AI. Redefining how businesses operate with 
-              advanced automation and digital twin intelligence.
+              Precision AI for CA & Legal Teams.
             </p>
             <p className="font-body text-sm text-muted-foreground/60">
-              Innovation should feel seamless.
+              Services: AI Systems • Automation • Consulting
             </p>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="font-heading text-sm uppercase tracking-widest text-gold mb-6">
+            <h4 className="font-heading text-sm uppercase tracking-widest text-foreground mb-6">
               Services
             </h4>
             <ul className="space-y-4">
@@ -69,7 +68,7 @@ export const Footer = () => {
 
           {/* Products */}
           <div>
-            <h4 className="font-heading text-sm uppercase tracking-widest text-teal mb-6">
+            <h4 className="font-heading text-sm uppercase tracking-widest text-foreground mb-6">
               Products
             </h4>
             <ul className="space-y-4">
@@ -89,7 +88,7 @@ export const Footer = () => {
 
           {/* Company */}
           <div>
-            <h4 className="font-heading text-sm uppercase tracking-widest text-rose mb-6">
+            <h4 className="font-heading text-sm uppercase tracking-widest text-foreground mb-6">
               Company
             </h4>
             <ul className="space-y-4">

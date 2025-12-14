@@ -7,15 +7,15 @@ const upcomingProducts = [
   {
     icon: GraduationCap,
     name: "fynqAI",
-    tagline: "Learn Smarter, Not Harder",
-    description: "An AI Tutor Platform & Personalized Studying Companion for students preparing for competitive exams.",
+    tagline: "Personalized AI tutor",
+    description: "Personalized AI tutor for competitive exam students.",
     status: "Coming Soon",
   },
   {
     icon: Bookmark,
     name: "UniBookmark.ai",
     tagline: "Your Knowledge, Organized",
-    description: "An Intelligent Bookmarking System that understands, categorizes, and surfaces your saved content when you need it.",
+    description: "An intelligent system that organizes and resurfaces your saved content.",
     status: "Coming Soon",
   },
 ];
@@ -23,13 +23,13 @@ const upcomingProducts = [
 const researchProject = {
   icon: Brain,
   name: "The Vanitas Framework",
-  tagline: "Multi-LLM Reasoning Excellence",
-  description: "A revolutionary Multi-LLM Reasoning Framework designed to eliminate hallucinations and deliver superior answers.",
+    tagline: "Multi-LLM Reasoning for more reliable answers",
+    description: "Multi-LLM reasoning for more reliable answers. A structured debate system combining Mother LLM, an Empathetic Initiator, and a Logical Critic in an 8-turn refinement loop.",
   features: [
-    "Mother LLM acts as Initiator & Judge",
-    "Son 1: Empathetic Debate Initiator",
-    "Son 2: Logical Critic for balance",
-    "Strict 8-turn debate policy for precision",
+    "Mother LLM (Judge)",
+    "Empathetic Initiator",
+    "Logical Critic",
+    "8-turn refinement loop",
   ],
 };
 
@@ -43,7 +43,7 @@ export const ProductsSection = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-border/40 to-transparent" />
       <div className="absolute top-1/4 right-0 w-1/4 h-1/4 bg-gradient-radial from-foreground/[0.015] to-transparent" />
 
-      <div className="container-premium relative z-10">
+      <div className="container-premium relative z-10 px-6 md:px-8 py-16 md:py-20">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.span
@@ -90,7 +90,7 @@ export const ProductsSection = () => {
                 className="group relative bg-background"
               >
                 <div className="absolute inset-0 bg-foreground/[0.015] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 <div className="relative flex items-center gap-6 p-6 lg:p-8">
                   {/* Icon */}
                   <div className="w-12 h-12 rounded-xl border border-border/40 flex items-center justify-center transition-all duration-500 group-hover:border-foreground/20 group-hover:bg-foreground/[0.02] flex-shrink-0">
@@ -117,10 +117,10 @@ export const ProductsSection = () => {
                     <span className="hidden lg:inline-block px-3 py-1 rounded-full text-[10px] font-heading font-medium tracking-wider uppercase bg-foreground/[0.05] text-muted-foreground/70 border border-border/30">
                       {product.status}
                     </span>
-                    <svg 
-                      className="w-4 h-4 text-muted-foreground/30 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-[-8px] group-hover:translate-x-0" 
-                      fill="none" 
-                      stroke="currentColor" 
+                    <svg
+                      className="w-4 h-4 text-muted-foreground/30 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-[-8px] group-hover:translate-x-0"
+                      fill="none"
+                      stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
@@ -147,14 +147,14 @@ export const ProductsSection = () => {
 
           <div className="relative group">
             <div className="absolute inset-0 bg-foreground/[0.015] opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl" />
-            
+
             <div className="relative border border-border/30 rounded-2xl p-8 lg:p-10 transition-all duration-500 group-hover:border-foreground/15">
               {/* Header Row */}
               <div className="flex items-start gap-6 mb-8 pb-8 border-b border-border/20">
                 <div className="w-12 h-12 rounded-xl border border-border/40 flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover:border-foreground/20 group-hover:bg-foreground/[0.02]">
                   <researchProject.icon className="w-5 h-5 text-foreground/50 transition-colors duration-500 group-hover:text-foreground/70" />
                 </div>
-                
+
                 <div className="flex-1">
                   <h4 className="font-heading text-2xl lg:text-3xl font-bold text-foreground mb-2 tracking-tight">
                     {researchProject.name}
@@ -195,10 +195,10 @@ export const ProductsSection = () => {
               {/* CTA */}
               <div className="flex items-center gap-2 mt-8 pt-8 border-t border-border/20 text-sm font-heading text-muted-foreground group-hover:text-foreground transition-colors duration-500">
                 <span className="tracking-wide">Explore Framework</span>
-                <svg 
-                  className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
