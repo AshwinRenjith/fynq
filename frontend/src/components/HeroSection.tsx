@@ -46,7 +46,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
             className="font-heading text-xl md:text-2xl text-muted-foreground font-medium mb-4"
           >
-            Professional intelligence, automated.
+            A knowledge base that thinks with you.
           </motion.p>
 
           {/* Description */}
@@ -56,9 +56,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="font-body text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed"
           >
-            We build agentic AI systems, RAG assistants, and workflow automations that handle
-            documents, decisions, and operations with accuracy your practice can trust.
-            Work smarter. Move faster. Stay ahead.
+            An AI brain for your company—designed to understand your knowledge, deliver precise answers, and automate work across your firm.
           </motion.p>
 
           {/* Stats */}

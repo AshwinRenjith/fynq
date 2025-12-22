@@ -4,11 +4,11 @@ import { useRef } from "react";
 import { Target, Gauge, Settings, Shield, RefreshCw } from "lucide-react";
 
 const reasons = [
-  { icon: Target, title: "Agentic automation", description: "Executes end-to-end workflows with minimal oversight" },
-  { icon: Gauge, title: "Context-aware RAG", description: "Delivers precise, firm-trained answers" },
-  { icon: Settings, title: "Custom workflows", description: "Built around your practice and processes" },
-  { icon: Shield, title: "Secure, reliable deployment", description: "Enterprise-ready infrastructure and controls" },
-  { icon: RefreshCw, title: "Systems that improve", description: "Intelligence that learns and adapts over time" },
+  { icon: Target, title: "Agentic Automation", description: "Executes end-to-end workflows with minimal human oversight—reliably and consistently." },
+  { icon: Gauge, title: "Context-Aware Knowledge Base", description: "Delivers precise, firm-trained answers grounded in your documents and internal knowledge" },
+  { icon: Settings, title: "Custom Workflows", description: "Built around your firm's processes, review cycles, and professional standards." },
+  { icon: Shield, title: "Secure, Reliable Deployment", description: "Enterprise-ready infrastructure with strong access controls, privacy, and compliance." },
+  { icon: RefreshCw, title: "Systems That Improve Over Time", description: "Intelligence that learns from your data and evolves as your firm grows." },
 ];
 
 export const WhyChooseSection = () => {
@@ -50,17 +50,7 @@ export const WhyChooseSection = () => {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="font-body text-lg text-muted-foreground leading-relaxed"
           >
-            Our Edge
-            
-            Agentic automation that executes end-to-end
-            
-            Context-aware RAG for precise answers
-            
-            Custom workflows built around your practice
-            
-            Secure, reliable deployment
-            
-            Systems that improve over time
+           We don’t just add AI to your firm—we build systems that fit how professionals work, delivering intelligence that is reliable, explainable, and easy to adopt.
           </motion.p>
         </div>
 
@@ -119,10 +109,7 @@ export const WhyChooseSection = () => {
           className="max-w-4xl mx-auto mt-16 pt-12 border-t border-border/20"
         >
           <p className="text-center font-body text-base text-muted-foreground">
-            Choose Fynq for solutions that feel{" "}
-            <span className="text-foreground font-medium">premium</span>, perform{" "}
-            <span className="text-foreground font-medium">flawlessly</span>, and deliver{" "}
-            <span className="text-foreground font-medium">measurable impact</span>
+            Choose Fynq for intelligent systems built to perform flawlessly and deliver measurable impact at scale.
           </p>
         </motion.div>
       </div>

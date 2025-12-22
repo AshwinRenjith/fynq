@@ -4,11 +4,11 @@ import { useRef } from "react";
 import { Sparkles, Copy, Wrench, Shield, TrendingUp } from "lucide-react";
 
 const features = [
-  { icon: Sparkles, description: "Agentic AI automation" },
-  { icon: Copy, description: "High-fidelity RAG engines" },
-  { icon: Wrench, description: "Tailored workflow systems" },
-  { icon: Shield, description: "Enterprise reliability" },
-  { icon: TrendingUp, description: "Intelligence that evolves with your firm" },
+  { icon: Sparkles, description: "Intelligent Knowledge Base" },
+  { icon: Copy, description: "Agentic AI Automation" },
+  { icon: Wrench, description: "Tailored Workflow Systems" },
+  { icon: Shield, description: "Security, Control & Compliance" },
+  { icon: TrendingUp, description: "Knowledge That Grows With Your Firm" },
 ];
 
 export const AboutSection = () => {
@@ -51,8 +51,9 @@ export const AboutSection = () => {
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               className="font-body text-lg text-muted-foreground leading-relaxed mb-6"
             >
-              Fynq builds specialized AI systems for accounting and legal teams—designed
-              to remove repetitive work, accelerate delivery, and increase accuracy.
+             Fynq builds specialized AI knowledge and automation systems for accounting and legal firms.
+Our mission is simple: reduce repetitive work, accelerate delivery, and improve accuracy—without compromising trust or control.
+
             </motion.p>
 
             <motion.p
@@ -61,19 +62,7 @@ export const AboutSection = () => {
               transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
               className="font-body text-lg text-muted-foreground leading-relaxed mb-8"
             >
-              What We Deliver
-
-              Agentic AI automation
-
-              High-fidelity RAG engines
-
-              Tailored workflow systems
-
-              Enterprise reliability
-
-              Intelligence that evolves with your firm
-
-              AI that works the way professionals think.
+              We help firms transform scattered documents, internal knowledge, and manual processes into a living, intelligent knowledge base that works the way professionals think.
             </motion.p>
           </div>
 
