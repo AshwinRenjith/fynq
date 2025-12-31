@@ -7,9 +7,23 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generate";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Handle CORS preflight requests
+  if (req.method === "OPTIONS") {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    return res.status(200).end();
+  }
+
+  // Only allow POST for actual API calls
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+
+  // Set CORS headers for all responses
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
